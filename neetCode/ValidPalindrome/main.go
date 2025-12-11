@@ -12,14 +12,24 @@ func isPalindrome(s string) bool {
     fmt.Println(split_string)
     join_string := strings.Join(split_string, "")
     fmt.Println(join_string)
-    for i := range join_string {
-        if join_string[i] == join_string[len(join_string)- 1 - i] {
-            continue
-        } else {
-            return false
+        cleaned := make([]rune, 0, len(s))
+        for _, r := range s {
+            if ('a' <= r && r <= 'z') || ('A' <= r && r <= 'Z') || ('0' <= r && r <= '9') {
+                if 'A' <= r && r <= 'Z' {
+                    r = r + ('a' - 'A') // convert to lowercase
+                }
+                cleaned = append(cleaned, r)
+            }
         }
-    }
-    return true
+        left, right := 0, len(cleaned)-1
+        for left < right {
+            if cleaned[left] != cleaned[right] {
+                return false
+            }
+            left++
+            right--
+        }
+        return true
 }
 
 
